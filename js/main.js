@@ -1,3 +1,5 @@
+window.onload = () => {
+
 const sample_cover = document.querySelector('.sample-cover-image')
 const sample_name = document.querySelector('.sample-name')
 const sample_category = document.querySelector('.sample-category')
@@ -11,7 +13,21 @@ const favorite_button_icon = document.querySelector('.favorite-button-icon')
 const volume_button = document.querySelector('.volume-button')
 const volume_button_icon = document.querySelector('.volume-button-icon')
 
-const sample = new Audio('./assets/audio/sample-beat.mp3')
+const sample_current_duration = document.querySelector('#current-duration')
+const seekbar = document.querySelector('#seekbar')
+const sample_total_duration = document.querySelector('.total-duration')
+
+const sample = document.querySelector('.sample-audio')
+sample_current_duration.innerHTML = "0:" + sample.currentTime.toFixed(0)
+
+seekbar.max = sample.duration.toFixed()
+sample_total_duration.innerHTML = "0:" + sample.duration.toFixed(0)
+
+var playing = false
+
+setInterval(function() {
+    setSeekbar()
+}, 1000)
 
 play_pause_button.addEventListener('click', () => {
 
@@ -20,10 +36,14 @@ play_pause_button.addEventListener('click', () => {
         play_pause_button.id = 'playing'
         sample.play()
 
+        playing = true
+
     }else{
         play_pause_button_icon.src = './assets/icons/play-icon.svg'
         play_pause_button.id = 'paused'
         sample.pause()
+
+        playing = false
 
     }
 
@@ -56,3 +76,19 @@ volume_button.addEventListener('click', () => {
     }
 
 })
+
+
+
+// Seekbar
+function setSeekbar(){
+    seekbar.value = Math.round(sample.currentTime)
+    sample_current_duration.innerHTML = "0:" + sample.currentTime.toFixed(0)
+    console.log(seekbar.value)
+}
+
+seekbar.addEventListener('change', (e) => {
+    sample.currentTime = e.target.value
+    sample_current_duration.innerHTML = "0:" + sample.currentTime.toFixed(0)
+})
+
+}

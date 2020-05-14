@@ -5,5 +5,5 @@
         "../scss/reset.scss"
     ],
     "names": [],
-    "file": "reset.min.css"
+    "file": "reset.css"
 }
